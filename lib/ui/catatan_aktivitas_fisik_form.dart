@@ -49,7 +49,13 @@ class _CatatanAktivitasFisikFormState extends State<CatatanAktivitasFisikForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(judul)),
+      appBar: AppBar(
+        title: Text(judul,
+            style: const TextStyle(
+              fontFamily: 'Helvetica',
+            )),
+        backgroundColor: Colors.yellow, // Warna background AppBar
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -66,6 +72,7 @@ class _CatatanAktivitasFisikFormState extends State<CatatanAktivitasFisikForm> {
           ),
         ),
       ),
+      backgroundColor: Colors.yellow[100], // Latar belakang kuning terang
     );
   }
 
@@ -80,6 +87,8 @@ class _CatatanAktivitasFisikFormState extends State<CatatanAktivitasFisikForm> {
         }
         return null;
       },
+      style: const TextStyle(
+          fontFamily: 'Helvetica'), // Menambahkan font Helvetica
     );
   }
 
@@ -95,6 +104,8 @@ class _CatatanAktivitasFisikFormState extends State<CatatanAktivitasFisikForm> {
         }
         return null;
       },
+      style: const TextStyle(
+          fontFamily: 'Helvetica'), // Menambahkan font Helvetica
     );
   }
 
@@ -109,13 +120,24 @@ class _CatatanAktivitasFisikFormState extends State<CatatanAktivitasFisikForm> {
         }
         return null;
       },
+      style: const TextStyle(
+          fontFamily: 'Helvetica'), // Menambahkan font Helvetica
     );
   }
 
   // Membuat Tombol Simpan/Ubah
   Widget _buttonSubmit() {
-    return OutlinedButton(
-      child: Text(tombolSubmit),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.yellow, // Warna tombol kuning
+        textStyle: const TextStyle(
+          fontFamily: 'Helvetica',
+          color: Colors.black,
+        ),
+      ),
+      child: _isLoading
+          ? const CircularProgressIndicator(color: Colors.white)
+          : Text(tombolSubmit),
       onPressed: () {
         var validate = _formKey.currentState!.validate();
         if (validate) {
@@ -145,7 +167,7 @@ class _CatatanAktivitasFisikFormState extends State<CatatanAktivitasFisikForm> {
 
     CatatanAktivitasFisikBloc.addCatatanAktivitas(catatan: createCatatan).then(
         (value) {
-      Navigator.of(context).push(MaterialPageRoute(
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) =>
               const CatatanAktivitasFisikPage()));
     }, onError: (error) {
@@ -174,7 +196,7 @@ class _CatatanAktivitasFisikFormState extends State<CatatanAktivitasFisikForm> {
 
     CatatanAktivitasFisikBloc.updateCatatanAktivitas(catatan: updateCatatan)
         .then((value) {
-      Navigator.of(context).push(MaterialPageRoute(
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) =>
               const CatatanAktivitasFisikPage()));
     }, onError: (error) {

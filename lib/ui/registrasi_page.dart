@@ -22,21 +22,27 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Registrasi"),
+        backgroundColor:
+            Colors.yellow[700], // Warna background AppBar kuning terang
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _namaTextField(),
-                _emailTextField(),
-                _passwordTextField(),
-                _passwordKonfirmasiTextField(),
-                _buttonRegistrasi()
-              ],
+      body: Container(
+        color: Colors.yellow[100], // Warna latar belakang terang kuning
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _namaTextField(),
+                  _emailTextField(),
+                  _passwordTextField(),
+                  _passwordKonfirmasiTextField(),
+                  const SizedBox(height: 30),
+                  _buttonRegistrasi()
+                ],
+              ),
             ),
           ),
         ),
@@ -47,7 +53,10 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
   // Membuat Textbox Nama
   Widget _namaTextField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: "Nama"),
+      decoration: const InputDecoration(
+        labelText: "Nama",
+        labelStyle: TextStyle(fontFamily: 'Helvetica'), // Mengatur font
+      ),
       keyboardType: TextInputType.text,
       controller: _namaTextboxController,
       validator: (value) {
@@ -56,21 +65,23 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
         }
         return null;
       },
+      style: const TextStyle(fontFamily: 'Helvetica'), // Font input text
     );
   }
 
   // Membuat Textbox email
   Widget _emailTextField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: "Email"),
+      decoration: const InputDecoration(
+        labelText: "Email",
+        labelStyle: TextStyle(fontFamily: 'Helvetica'), // Mengatur font
+      ),
       keyboardType: TextInputType.emailAddress,
       controller: _emailTextboxController,
       validator: (value) {
-        // validasi harus diisi
         if (value!.isEmpty) {
           return 'Email harus diisi';
         }
-        // validasi email
         Pattern pattern =
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
         RegExp regex = RegExp(pattern.toString());
@@ -79,52 +90,73 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
         }
         return null;
       },
+      style: const TextStyle(fontFamily: 'Helvetica'), // Font input text
     );
   }
 
   // Membuat Textbox password
   Widget _passwordTextField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: "Password"),
+      decoration: const InputDecoration(
+        labelText: "Password",
+        labelStyle: TextStyle(fontFamily: 'Helvetica'), // Mengatur font
+      ),
       keyboardType: TextInputType.text,
       obscureText: true,
       controller: _passwordTextboxController,
       validator: (value) {
-        // jika karakter yang dimasukkan kurang dari 6 karakter
         if (value!.length < 6) {
           return "Password harus diisi minimal 6 karakter";
         }
         return null;
       },
+      style: const TextStyle(fontFamily: 'Helvetica'), // Font input text
     );
   }
 
   // Membuat textbox Konfirmasi Password
   Widget _passwordKonfirmasiTextField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: "Konfirmasi Password"),
+      decoration: const InputDecoration(
+        labelText: "Konfirmasi Password",
+        labelStyle: TextStyle(fontFamily: 'Helvetica'), // Mengatur font
+      ),
       keyboardType: TextInputType.text,
       obscureText: true,
       validator: (value) {
-        // jika inputan tidak sama dengan password
         if (value != _passwordTextboxController.text) {
           return "Konfirmasi Password tidak sama";
         }
         return null;
       },
+      style: const TextStyle(fontFamily: 'Helvetica'), // Font input text
     );
   }
 
   // Membuat Tombol Registrasi
   Widget _buttonRegistrasi() {
-    return ElevatedButton(
-      child: const Text("Registrasi"),
-      onPressed: () {
-        var validate = _formKey.currentState!.validate();
-        if (validate) {
-          if (!_isLoading) _submit();
-        }
-      },
+    return Container(
+      width: double.infinity, // Membuat tombol memenuhi lebar
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.yellow[700], // Warna tombol kuning terang
+          padding: const EdgeInsets.symmetric(vertical: 15), // Padding tombol
+        ),
+        child: _isLoading
+            ? const CircularProgressIndicator(color: Colors.white)
+            : const Text(
+                "Registrasi",
+                style: TextStyle(fontFamily: 'Helvetica'), // Font tombol
+              ),
+        onPressed: _isLoading
+            ? null
+            : () {
+                var validate = _formKey.currentState!.validate();
+                if (validate) {
+                  if (!_isLoading) _submit();
+                }
+              },
+      ),
     );
   }
 

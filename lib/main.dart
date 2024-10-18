@@ -7,33 +7,12 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  Widget page = const CircularProgressIndicator();
-
-  @override
-  void initState() {
-    super.initState();
-    isLogin();
-  }
-
-  void isLogin() async {
+  Future<bool> isLogin() async {
     var token = await UserInfo().getToken();
-    if (token != null) {
-      setState(() {
-        page = const CatatanAktivitasFisikPage();
-      });
-    } else {
-      setState(() {
-        page = const CatatanAktivitasLoginPage();
-      });
-    }
+    return token != null; // Return true if token exists
   }
 
   @override
@@ -41,7 +20,29 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Kesehatan Catatan Aktivitas Fisik',
       debugShowCheckedModeBanner: false,
-      home: page,
+      home: Scaffold(
+        body: Center(
+          child: FutureBuilder<bool>(
+            future: isLogin(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Loading state
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                // Error state
+                return const Text("Terjadi kesalahan. Silahkan coba lagi.");
+              } else {
+                // Jika berhasil mendapatkan token
+                if (snapshot.data == true) {
+                  return const CatatanAktivitasFisikPage();
+                } else {
+                  return const CatatanAktivitasLoginPage();
+                }
+              }
+            },
+          ),
+        ),
+      ),
     );
   }
 }

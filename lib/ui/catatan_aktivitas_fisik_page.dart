@@ -19,7 +19,9 @@ class _CatatanAktivitasFisikPageState extends State<CatatanAktivitasFisikPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('List Catatan Aktivitas Fisik'),
+        title: const Text('List Catatan Aktivitas Fisik',
+            style: TextStyle(fontFamily: 'Helvetica')),
+        backgroundColor: Colors.yellow, // Warna background AppBar
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
@@ -41,7 +43,8 @@ class _CatatanAktivitasFisikPageState extends State<CatatanAktivitasFisikPage> {
         child: ListView(
           children: [
             ListTile(
-              title: const Text('Logout'),
+              title: const Text('Logout',
+                  style: TextStyle(fontFamily: 'Helvetica')),
               trailing: const Icon(Icons.logout),
               onTap: () async {
                 await LogoutBloc.logout().then((value) => {
@@ -56,20 +59,23 @@ class _CatatanAktivitasFisikPageState extends State<CatatanAktivitasFisikPage> {
           ],
         ),
       ),
-      body: FutureBuilder<List<Catatan_aktivitas_fisik>>(
-        future: CatatanAktivitasFisikBloc
-            .getCatatanAktivitas(), // Memanggil bloc untuk mengambil data
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            print(snapshot.error);
-            return const Center(child: Text("Error loading data"));
-          }
-          return snapshot.hasData
-              ? ListCatatanAktivitasFisik(list: snapshot.data)
-              : const Center(
-                  child: CircularProgressIndicator(),
-                );
-        },
+      body: Container(
+        color: Colors.yellow[100], // Warna latar belakang terang
+        child: FutureBuilder<List<Catatan_aktivitas_fisik>>(
+          future: CatatanAktivitasFisikBloc
+              .getCatatanAktivitas(), // Memanggil bloc untuk mengambil data
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              print(snapshot.error);
+              return const Center(child: Text("Error loading data"));
+            }
+            return snapshot.hasData
+                ? ListCatatanAktivitasFisik(list: snapshot.data)
+                : const Center(
+                    child: CircularProgressIndicator(),
+                  );
+          },
+        ),
       ),
     );
   }
@@ -117,12 +123,18 @@ class ItemCatatanAktivitasFisik extends StatelessWidget {
       },
       child: Card(
         child: ListTile(
-          title: Text(catatanAktivitasFisik.activityName ??
-              'Tidak ada aktivitas'), // Menampilkan nama aktivitas
+          title: Text(
+            catatanAktivitasFisik.activityName ?? 'Tidak ada aktivitas',
+            style: const TextStyle(fontFamily: 'Helvetica'), // Mengatur font
+          ),
           subtitle: Text(
-              '${catatanAktivitasFisik.duration?.toString() ?? '0'} menit'), // Durasi aktivitas
-          trailing: Text(catatanAktivitasFisik.intensity ??
-              'Tidak ada intensitas'), // Intensitas aktivitas
+              '${catatanAktivitasFisik.duration?.toString() ?? '0'} menit',
+              style:
+                  const TextStyle(fontFamily: 'Helvetica')), // Durasi aktivitas
+          trailing: Text(
+              catatanAktivitasFisik.intensity ?? 'Tidak ada intensitas',
+              style: const TextStyle(
+                  fontFamily: 'Helvetica')), // Intensitas aktivitas
         ),
       ),
     );

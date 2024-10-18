@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsi_kesehatan/bloc/catatan_aktivitas_fisik_bloc.dart';
 import 'package:responsi_kesehatan/bloc/login_bloc.dart';
-import 'package:responsi_kesehatan/helpers/user_info.dart';
 import 'package:responsi_kesehatan/widget/warning_dialog.dart';
 import 'package:responsi_kesehatan/ui/catatan_aktivitas_fisik_page.dart';
 import 'package:responsi_kesehatan/ui/registrasi_page.dart';
@@ -24,21 +23,41 @@ class _CatatanAktivitasLoginPageState extends State<CatatanAktivitasLoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login Catatan Aktivitas Fisik'),
+        title: const Text(
+          'Login Catatan Aktivitas Fisik',
+          style: TextStyle(fontFamily: 'Helvetica', fontSize: 20),
+        ),
+        backgroundColor: Colors.yellow[700], // Warna kuning terang
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                _emailTextField(),
-                _passwordTextField(),
-                _buttonLogin(),
-                const SizedBox(height: 30),
-                _menuRegistrasi()
-              ],
+      body: Container(
+        padding: const EdgeInsets.all(16.0),
+        color: Colors.yellow[50], // Latar belakang kuning terang yang lembut
+        child: Center(
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Silakan Masukkan Data Anda",
+                    style: TextStyle(
+                      fontFamily: 'Helvetica',
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  _emailTextField(),
+                  const SizedBox(height: 20),
+                  _passwordTextField(),
+                  const SizedBox(height: 30),
+                  _buttonLogin(),
+                  const SizedBox(height: 20),
+                  _menuRegistrasi()
+                ],
+              ),
             ),
           ),
         ),
@@ -49,7 +68,29 @@ class _CatatanAktivitasLoginPageState extends State<CatatanAktivitasLoginPage> {
   // Membuat Textbox email
   Widget _emailTextField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: "Email"),
+      decoration: InputDecoration(
+        labelText: "Email",
+        labelStyle: const TextStyle(
+          fontFamily: 'Helvetica',
+          fontSize: 16,
+        ),
+        filled: true,
+        fillColor: Colors.white,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Colors.yellow, // Border warna kuning
+            width: 2.0,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Colors.orange, // Warna border saat fokus
+            width: 2.0,
+          ),
+        ),
+      ),
       keyboardType: TextInputType.emailAddress,
       controller: _emailTextboxController,
       validator: (value) {
@@ -58,14 +99,36 @@ class _CatatanAktivitasLoginPageState extends State<CatatanAktivitasLoginPage> {
         }
         return null;
       },
+      style: const TextStyle(fontFamily: 'Helvetica'),
     );
   }
 
   // Membuat Textbox password
   Widget _passwordTextField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: "Password"),
-      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        labelText: "Password",
+        labelStyle: const TextStyle(
+          fontFamily: 'Helvetica',
+          fontSize: 16,
+        ),
+        filled: true,
+        fillColor: Colors.white,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Colors.yellow, // Border warna kuning
+            width: 2.0,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Colors.orange, // Warna border saat fokus
+            width: 2.0,
+          ),
+        ),
+      ),
       obscureText: true,
       controller: _passwordTextboxController,
       validator: (value) {
@@ -74,19 +137,31 @@ class _CatatanAktivitasLoginPageState extends State<CatatanAktivitasLoginPage> {
         }
         return null;
       },
+      style: const TextStyle(fontFamily: 'Helvetica'),
     );
   }
 
   // Membuat Tombol Login
   Widget _buttonLogin() {
     return ElevatedButton(
-        child: const Text("Login"),
-        onPressed: () {
-          var validate = _formKey.currentState!.validate();
-          if (validate) {
-            if (!_isLoading) _submit();
-          }
-        });
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.orange[700], // Warna tombol lebih gelap
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12), // Tombol lebih melengkung
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+      ),
+      child: const Text(
+        "Login",
+        style: TextStyle(fontFamily: 'Helvetica', fontSize: 18),
+      ),
+      onPressed: () {
+        var validate = _formKey.currentState!.validate();
+        if (validate) {
+          if (!_isLoading) _submit();
+        }
+      },
+    );
   }
 
   void _submit() {
@@ -131,7 +206,11 @@ class _CatatanAktivitasLoginPageState extends State<CatatanAktivitasLoginPage> {
       child: InkWell(
         child: const Text(
           "Registrasi",
-          style: TextStyle(color: Colors.blue),
+          style: TextStyle(
+            color: Colors.blue,
+            fontFamily: 'Helvetica',
+            fontSize: 16,
+          ),
         ),
         onTap: () {
           Navigator.push(context,

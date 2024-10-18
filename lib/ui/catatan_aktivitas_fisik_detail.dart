@@ -23,16 +23,22 @@ class _CatatanAktivitasFisikDetailState
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detail Catatan Aktivitas Fisik'),
+        backgroundColor: Colors.yellow, // Warna latar belakang AppBar
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-                'Nama Aktivitas: ${widget.catatan?.activityName ?? 'Tidak ada data'}'),
+                'Nama Aktivitas: ${widget.catatan?.activityName ?? 'Tidak ada data'}',
+                style: TextStyle(fontFamily: 'Helvetica', fontSize: 20)),
             Text(
-                'Durasi: ${widget.catatan?.duration?.toString() ?? 'Tidak ada data'} menit'),
-            Text(
-                'Intensitas: ${widget.catatan?.intensity ?? 'Tidak ada data'}'),
+                'Durasi: ${widget.catatan?.duration?.toString() ?? 'Tidak ada data'} menit',
+                style: TextStyle(fontFamily: 'Helvetica', fontSize: 20)),
+            Text('Intensitas: ${widget.catatan?.intensity ?? 'Tidak ada data'}',
+                style: TextStyle(fontFamily: 'Helvetica', fontSize: 20)),
+            const SizedBox(height: 20),
+            _tombolHapusEdit(),
           ],
         ),
       ),
@@ -45,6 +51,10 @@ class _CatatanAktivitasFisikDetailState
       children: [
         // Tombol Edit
         OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: Colors.yellow, // Warna latar belakang tombol
+            side: BorderSide(color: Colors.black), // Warna tepi tombol
+          ),
           child: const Text("EDIT"),
           onPressed: () {
             Navigator.push(
@@ -57,8 +67,13 @@ class _CatatanAktivitasFisikDetailState
             );
           },
         ),
+        const SizedBox(width: 10), // Spasi antar tombol
         // Tombol Hapus
         OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: Colors.yellow, // Warna latar belakang tombol
+            side: BorderSide(color: Colors.black), // Warna tepi tombol
+          ),
           child: const Text("DELETE"),
           onPressed: () => confirmHapus(),
         ),
